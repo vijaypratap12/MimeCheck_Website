@@ -1,0 +1,122 @@
+.docs {
+  min-height: calc(100vh - 70px);
+  background: #f7fafc;
+  padding: 3rem 2rem;
+}
+
+.docs-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.docs-title {
+  font-size: 3rem;
+  color: #2d3748;
+  margin-bottom: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.docs-section {
+  margin-bottom: 3rem;
+}
+
+.docs-section h2 {
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #667eea;
+}
+
+.docs-section h3 {
+  font-size: 1.5rem;
+  color: #4a5568;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.docs-section p {
+  color: #4a5568;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.docs-section ul {
+  color: #4a5568;
+  line-height: 1.8;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.docs-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.docs-section a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.docs-section a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.docs .code-block {
+  background: #1a202c;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.docs .code-block pre {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.docs .code-block code {
+  color: #68d391;
+}
+
+@media screen and (max-width: 768px) {
+  .docs {
+    padding: 2rem 1rem;
+  }
+
+  .docs-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .docs-title {
+    font-size: 2rem;
+  }
+
+  .docs-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .docs-section h3 {
+    font-size: 1.2rem;
+  }
+
+  .docs .code-block {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+}
+
