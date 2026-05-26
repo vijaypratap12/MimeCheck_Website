@@ -93,6 +93,58 @@
   color: #68d391;
 }
 
+.docs-section :not(.code-block) > code {
+  background: #edf2f7;
+  color: #5a3da3;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95em;
+}
+
+.badge-new {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  vertical-align: middle;
+  color: #ffffff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+.docs-table-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0 1.5rem;
+}
+
+.docs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  color: #4a5568;
+}
+
+.docs-table th,
+.docs-table td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+.docs-table th {
+  background: #f7fafc;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.docs-table tr:last-child td {
+  border-bottom: none;
+}
+
 @media screen and (max-width: 768px) {
   .docs {
     padding: 2rem 1rem;

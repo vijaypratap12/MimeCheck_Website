@@ -33,12 +33,21 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://github.com/vijaypratap12/MimeCheck/issues" 
-                  target="_blank" 
+                <a
+                  href="https://github.com/vijaypratap12/MimeCheck/issues"
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   Report Issues
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/vijaypratap12/MimeCheck/blob/main/CHANGELOG.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Changelog
                 </a>
               </li>
             </ul>

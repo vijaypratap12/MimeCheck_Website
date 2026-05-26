@@ -91,6 +91,90 @@ bool isJpegOrPng = MimeValidator.IsValid("image.jpg", "image/jpeg", "image/png")
         </section>
 
         <section className="docs-section">
+          <h2>MIME String Validation <span className="badge-new">v2.0+</span></h2>
+          <p>
+            To validate a user-supplied MIME-type string (form field, HTTP header, config value),
+            use <code>IsKnownMimeType()</code>. Unlike <code>GetSupportedMimeTypes()</code> &mdash;
+            which returns only types detectable from file bytes &mdash; <code>IsKnownMimeType()</code>{' '}
+            recognizes canonical MIME types, their common aliases
+            (<code>text/xml</code>, <code>image/jpg</code>, <code>application/x-zip-compressed</code>,{' '}
+            <code>audio/mp3</code>, etc.), and signature-less types
+            (<code>text/csv</code>, <code>multipart/form-data</code>, etc.). It is case- and
+            whitespace-insensitive.
+          </p>
+          <div className="code-block">
+            <pre><code>{`using MimeCheck.Validation;
+
+// Canonical types — recognized
+MimeValidator.IsKnownMimeType("image/png");                  // true
+MimeValidator.IsKnownMimeType("application/pdf");            // true
+
+// Aliases — recognized via signature aliases
+MimeValidator.IsKnownMimeType("image/jpg");                  // true (alias of image/jpeg)
+MimeValidator.IsKnownMimeType("text/xml");                   // true (alias of application/xml)
+MimeValidator.IsKnownMimeType("application/x-zip-compressed"); // true (alias of application/zip)
+MimeValidator.IsKnownMimeType("audio/mp3");                  // true (alias of audio/mpeg)
+
+// Signature-less types — recognized via the known registry
+MimeValidator.IsKnownMimeType("text/csv");                   // true
+MimeValidator.IsKnownMimeType("multipart/form-data");        // true
+MimeValidator.IsKnownMimeType("application/ld+json");        // true
+
+// Case- and whitespace-insensitive
+MimeValidator.IsKnownMimeType("  Application/JSON  ");       // true
+
+// Unknown / invalid
+MimeValidator.IsKnownMimeType("application/totally-fake");   // false
+MimeValidator.IsKnownMimeType("");                           // false
+MimeValidator.IsKnownMimeType(null);                         // false
+
+// Enumerate every recognized MIME-type string
+foreach (var mime in MimeValidator.GetKnownMimeTypes())
+{
+    Console.WriteLine(mime);
+}`}</code></pre>
+          </div>
+        </section>
+
+        <section className="docs-section">
+          <h3>When to use which method</h3>
+          <div className="docs-table-wrapper">
+            <table className="docs-table">
+              <thead>
+                <tr>
+                  <th>Question you&rsquo;re asking</th>
+                  <th>Use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>&ldquo;What MIME type are these file bytes?&rdquo;</td>
+                  <td><code>MimeValidator.Detect(bytes)</code></td>
+                </tr>
+                <tr>
+                  <td>&ldquo;Can this library identify a file of this MIME type from its bytes?&rdquo;</td>
+                  <td><code>MimeValidator.GetSupportedMimeTypes()</code></td>
+                </tr>
+                <tr>
+                  <td>&ldquo;Is this string a recognized MIME type (including aliases)?&rdquo;</td>
+                  <td><code>MimeValidator.IsKnownMimeType(string)</code></td>
+                </tr>
+                <tr>
+                  <td>&ldquo;Give me the full set of recognized MIME-type strings.&rdquo;</td>
+                  <td><code>MimeValidator.GetKnownMimeTypes()</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            <strong>Note:</strong> the detector continues to return only canonical MIME types &mdash;
+            aliases are recognized by <code>IsKnownMimeType</code> but are never returned from{' '}
+            <code>Detect()</code>. Existing code that compares detection results to canonical
+            constants in <code>MimeTypes</code> behaves identically to v1.x.
+          </p>
+        </section>
+
+        <section className="docs-section">
           <h2>ASP.NET Core Integration</h2>
           <h3>Setup</h3>
           <div className="code-block">
@@ -267,6 +351,55 @@ if (!result.IsValid)
             <li><strong>No Full File Load:</strong> Works with streams without loading entire files into memory</li>
             <li><strong>Cached Signatures:</strong> Signature database is loaded once and cached</li>
             <li><strong>Async Support:</strong> Use async methods for I/O-bound operations</li>
+          </ul>
+        </section>
+
+        <section className="docs-section">
+          <h2>Release Notes</h2>
+          <p>
+            See the full changelog on{' '}
+            <a
+              href="https://github.com/vijaypratap12/MimeCheck/blob/main/CHANGELOG.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>{' '}
+            or browse{' '}
+            <a
+              href="https://github.com/vijaypratap12/MimeCheck/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub Releases
+            </a>{' '}
+            for tagged versions.
+          </p>
+          <h3>v2.0.0 &mdash; Highlights</h3>
+          <p>
+            Purely additive &mdash; 1.x code compiles and runs identically on 2.0.0.
+          </p>
+          <ul>
+            <li>
+              <strong>New:</strong> <code>MimeValidator.IsKnownMimeType(string)</code> and{' '}
+              <code>GetKnownMimeTypes()</code> for validating user-supplied MIME-type strings.
+            </li>
+            <li>
+              <strong>New:</strong> <code>MimeSignature.Aliases</code> &mdash; alternate MIME names
+              co-located with byte signatures.
+            </li>
+            <li>
+              <strong>New:</strong> <code>SignatureDatabase.GetAllMimeTypesIncludingAliases()</code>.
+            </li>
+            <li>
+              <strong>New constants:</strong> <code>TextXml</code>, <code>Csv</code>,{' '}
+              <code>Markdown</code>, <code>Yaml</code>, <code>XHtml</code>, <code>JsonLd</code>,{' '}
+              <code>FormUrlEncoded</code>, <code>MultipartFormData</code>.
+            </li>
+            <li>
+              <strong>Unchanged:</strong> detector output, <code>GetSupportedMimeTypes()</code>,
+              all existing constants, AspNetCore middleware, attributes, and services.
+            </li>
           </ul>
         </section>
 
